@@ -1,0 +1,638 @@
+/* ============================================================
+   ESTILOS DE LA MÁQUINA EXPENDEDORA - "SNACK·BOX"
+   Estilo neón retro-futurista.
+   CSS solo controla cómo se VE la página: colores, tamaños,
+   espacios, sombras y animaciones. No tiene lógica.
+   ============================================================ */
+
+/* ---------- Variables: cambia un color aquí y cambia en todo ---------- */
+:root {
+    --fondo: #07060f;
+    --cuerpo: #15122b;
+    --cuerpo-2: #1f1a3d;
+    --rosa: #ff2e88;
+    --cian: #22e4ff;
+    --amarillo: #ffd23f;
+    --verde: #3dff9a;
+    --rojo: #ff4d5e;
+    --texto: #e9e6ff;
+    --tenue: #8f88c2;
+    --fuente-titulo: "Orbitron", "Segoe UI", sans-serif;
+    --fuente-texto: "Rajdhani", "Segoe UI", sans-serif;
+    --fuente-lcd: "VT323", Consolas, monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 16px;
+    background:
+        radial-gradient(circle at 50% 120%, #2a1450 0%, transparent 60%),
+        var(--fondo);
+    font-family: var(--fuente-texto);
+    color: var(--texto);
+    overflow-x: hidden;
+}
+
+/* Cuadrícula tipo "piso retro" en el fondo */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 46, 136, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 228, 255, 0.07) 1px, transparent 1px);
+    background-size: 40px 40px;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 70%);
+    mask-image: linear-gradient(to bottom, transparent, black 70%);
+    pointer-events: none;
+}
+
+/* Manchas de luz de colores que flotan en el fondo */
+.fondo-luz {
+    position: fixed;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.35;
+    pointer-events: none;
+    animation: flotar 12s ease-in-out infinite alternate;
+}
+.luz-1 { background: var(--rosa); top: -120px; left: -100px; }
+.luz-2 { background: var(--cian); bottom: -140px; right: -100px; animation-delay: -6s; }
+
+@keyframes flotar {
+    to { transform: translate(60px, 40px) scale(1.15); }
+}
+
+/* ============================================================
+   CUERPO DE LA MÁQUINA
+   ============================================================ */
+.maquina {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    padding: 28px;
+    border-radius: 28px;
+    background: linear-gradient(160deg, var(--cuerpo-2), var(--cuerpo) 60%);
+    border: 2px solid #3a3270;
+    box-shadow:
+        0 0 0 6px #0d0b1d,
+        0 0 40px rgba(255, 46, 136, 0.25),
+        0 30px 80px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- Letrero de neón ---------- */
+.maquina__titulo {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.maquina__titulo h1 {
+    margin: 0;
+    font-family: var(--fuente-titulo);
+    font-weight: 800;
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    letter-spacing: 6px;
+    color: #fff;
+    text-shadow:
+        0 0 6px #fff,
+        0 0 16px var(--rosa),
+        0 0 32px var(--rosa),
+        0 0 60px var(--rosa);
+    animation: parpadeo 6s infinite;
+}
+
+.maquina__titulo h1 span {
+    color: var(--cian);
+    text-shadow: 0 0 10px var(--cian), 0 0 30px var(--cian);
+}
+
+.maquina__titulo p {
+    margin: 4px 0 0;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    font-size: 0.85rem;
+    color: var(--cian);
+    text-shadow: 0 0 8px var(--cian);
+}
+
+/* El letrero "falla" un instante, como un neón real */
+@keyframes parpadeo {
+    0%, 92%, 100% { opacity: 1; }
+    93% { opacity: 0.4; }
+    94% { opacity: 1; }
+    96% { opacity: 0.6; }
+}
+
+/* ============================================================
+   MENÚ PRINCIPAL
+   ============================================================ */
+.menu {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.menu__btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    border: 2px solid #3a3270;
+    border-radius: 14px;
+    background: #0f0d22;
+    color: var(--tenue);
+    font-family: var(--fuente-titulo);
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.menu__btn b {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #241f4a;
+    color: var(--texto);
+}
+
+.menu__btn:hover {
+    color: var(--texto);
+    border-color: var(--cian);
+    transform: translateY(-2px);
+}
+
+.menu__btn.activo {
+    color: #fff;
+    border-color: var(--cian);
+    background: linear-gradient(180deg, rgba(34, 228, 255, 0.18), rgba(34, 228, 255, 0.04));
+    box-shadow: 0 0 18px rgba(34, 228, 255, 0.45), inset 0 0 12px rgba(34, 228, 255, 0.2);
+}
+
+.menu__btn.activo b {
+    background: var(--cian);
+    color: #001;
+}
+
+.menu__btn.salir:hover,
+.menu__btn.salir.activo {
+    border-color: var(--rosa);
+    box-shadow: 0 0 18px rgba(255, 46, 136, 0.45);
+}
+
+/* ============================================================
+   SECCIONES
+   ============================================================ */
+.seccion {
+    animation: aparecer 0.4s ease;
+}
+
+.seccion h2 {
+    margin: 0 0 14px;
+    font-family: var(--fuente-titulo);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amarillo);
+    text-shadow: 0 0 10px rgba(255, 210, 63, 0.6);
+}
+
+/* La clase "oculto" esconde una sección. JavaScript la pone y la quita. */
+.oculto {
+    display: none;
+}
+
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* Dos columnas: vitrina a la izquierda, panel a la derecha */
+.comprar {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 20px;
+}
+
+/* ============================================================
+   VITRINA DE CRISTAL
+   ============================================================ */
+.vitrina {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* la bandeja queda siempre abajo */
+    padding: 18px;
+    border-radius: 18px;
+    background:
+        linear-gradient(115deg, rgba(255, 255, 255, 0.09) 0%, transparent 35%),
+        #0a0918;
+    border: 2px solid #2e2860;
+    box-shadow: inset 0 0 40px rgba(34, 228, 255, 0.12);
+    overflow: hidden;
+}
+
+/* Reflejo del cristal que se mueve lentamente */
+.vitrina::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 40%;
+    height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+    transform: rotate(20deg);
+    animation: reflejo 7s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes reflejo {
+    0%   { left: -60%; }
+    60%, 100% { left: 130%; }
+}
+
+.productos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+/* ---------- Tarjeta de producto ---------- */
+.producto {
+    position: relative;
+    padding: 18px 10px 14px;
+    border: 2px solid #2e2860;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #1a1638, #110f26);
+    color: var(--texto);
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Espiral metálica debajo de cada producto, como en una máquina real */
+.producto::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: -9px;
+    height: 8px;
+    border-radius: 4px;
+    background: repeating-linear-gradient(90deg, #8c86b8 0 3px, #3a3466 3px 9px);
+    opacity: 0.7;
+}
+
+.producto:hover {
+    transform: translateY(-4px);
+    border-color: var(--rosa);
+    box-shadow: 0 8px 24px rgba(255, 46, 136, 0.3);
+}
+
+/* Producto que el usuario eligió */
+.producto.seleccionado {
+    border-color: var(--cian);
+    box-shadow: 0 0 0 2px var(--cian), 0 0 28px rgba(34, 228, 255, 0.55);
+}
+
+.producto.seleccionado .producto__icono {
+    animation: rebote 0.9s ease-in-out infinite;
+}
+
+.producto__icono {
+    font-size: 2.8rem;
+    filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.6));
+}
+
+.producto__nombre {
+    margin-top: 4px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+}
+
+.producto__precio {
+    display: inline-block;
+    margin: 6px 0 4px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: rgba(255, 210, 63, 0.12);
+    color: var(--amarillo);
+    font-family: var(--fuente-titulo);
+    font-size: 0.95rem;
+    text-shadow: 0 0 8px rgba(255, 210, 63, 0.6);
+}
+
+.producto__stock {
+    font-size: 0.85rem;
+    color: var(--tenue);
+}
+
+@keyframes rebote {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+}
+
+/* ---------- Bandeja donde cae el producto ---------- */
+.bandeja {
+    position: relative;
+    margin-top: 26px;
+    height: 64px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #000, #15122b);
+    border: 2px solid #2e2860;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.bandeja__texto {
+    font-family: var(--fuente-titulo);
+    font-size: 0.7rem;
+    letter-spacing: 6px;
+    color: #3a3466;
+}
+
+.bandeja__producto {
+    position: absolute;
+    font-size: 2.2rem;
+    opacity: 0;
+}
+
+/* JavaScript agrega la clase "cae" para disparar la animación */
+.bandeja__producto.cae {
+    animation: caer 0.8s cubic-bezier(0.3, 1.4, 0.6, 1) forwards;
+}
+
+@keyframes caer {
+    0%   { transform: translateY(-80px) rotate(-30deg); opacity: 0; }
+    60%  { opacity: 1; }
+    100% { transform: translateY(0) rotate(8deg); opacity: 1; }
+}
+
+/* ============================================================
+   PANEL DE CONTROL
+   ============================================================ */
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 18px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #221c46, #17132f);
+    border: 2px solid #2e2860;
+}
+
+/* ---------- Pantalla LCD ---------- */
+.mensaje {
+    position: relative;
+    min-height: 120px;
+    padding: 14px;
+    border-radius: 10px;
+    background: #031a12;
+    border: 2px solid #0b3a28;
+    color: var(--verde);
+    font-family: var(--fuente-lcd);
+    font-size: 1.35rem;
+    line-height: 1.2;
+    text-shadow: 0 0 6px rgba(61, 255, 154, 0.8);
+    white-space: pre-line; /* respeta los saltos de línea del texto */
+    box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+}
+
+/* Líneas horizontales tipo pantalla antigua */
+.mensaje::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.25) 0 2px, transparent 2px 4px);
+    pointer-events: none;
+}
+
+.mensaje.error {
+    background: #1f0509;
+    border-color: #4a0f18;
+    color: var(--rojo);
+    text-shadow: 0 0 6px rgba(255, 77, 94, 0.8);
+    animation: sacudir 0.35s ease;
+}
+
+@keyframes sacudir {
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-3px); }
+}
+
+/* ---------- Formulario ---------- */
+.formulario {
+    display: grid;
+    gap: 14px;
+}
+
+.formulario label {
+    display: grid;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--tenue);
+}
+
+.formulario input {
+    padding: 10px 12px;
+    border: 2px solid #3a3270;
+    border-radius: 10px;
+    background: #0a0918;
+    color: var(--texto);
+    font-family: var(--fuente-titulo);
+    font-size: 1.1rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formulario input:focus {
+    border-color: var(--cian);
+    box-shadow: 0 0 14px rgba(34, 228, 255, 0.4);
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: rgba(255, 210, 63, 0.08);
+    border: 1px dashed rgba(255, 210, 63, 0.4);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.total strong {
+    font-family: var(--fuente-titulo);
+    font-size: 1.4rem;
+    color: var(--amarillo);
+    text-shadow: 0 0 10px rgba(255, 210, 63, 0.7);
+}
+
+.total--grande {
+    margin-top: 16px;
+}
+
+/* Ranura de monedas decorativa */
+.ranura {
+    display: flex;
+    justify-content: center;
+}
+
+.ranura span {
+    width: 46px;
+    height: 10px;
+    border-radius: 5px;
+    background: #000;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.9), 0 0 0 3px #3a3270, 0 0 12px rgba(255, 46, 136, 0.5);
+}
+
+/* ---------- Botón principal ---------- */
+.btn-comprar {
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--rosa), #ff7a3d);
+    color: #fff;
+    font-family: var(--fuente-titulo);
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #9c1452, 0 0 24px rgba(255, 46, 136, 0.5);
+    transition: transform 0.1s, box-shadow 0.1s, filter 0.2s;
+}
+
+.btn-comprar:hover {
+    filter: brightness(1.12);
+}
+
+/* Efecto de botón "hundido" al hacer clic */
+.btn-comprar:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #9c1452, 0 0 14px rgba(255, 46, 136, 0.5);
+}
+
+/* ============================================================
+   TABLA DE INVENTARIO
+   ============================================================ */
+.tabla {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    font-size: 1.05rem;
+}
+
+.tabla th {
+    padding: 6px 14px;
+    text-align: left;
+    font-family: var(--fuente-titulo);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cian);
+}
+
+.tabla td {
+    padding: 14px;
+    background: #110f26;
+    border-top: 1px solid #2e2860;
+    border-bottom: 1px solid #2e2860;
+}
+
+.tabla td:first-child {
+    border-left: 1px solid #2e2860;
+    border-radius: 12px 0 0 12px;
+    font-weight: 700;
+}
+
+.tabla td:last-child {
+    border-right: 1px solid #2e2860;
+    border-radius: 0 12px 12px 0;
+}
+
+.tabla tbody tr {
+    transition: transform 0.2s;
+}
+
+.tabla tbody tr:hover {
+    transform: translateX(6px);
+}
+
+/* Etiquetas de estado tipo "píldora" */
+.estado-bajo,
+.estado-ok {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.estado-bajo { color: var(--rojo); text-shadow: 0 0 8px rgba(255, 77, 94, 0.7); }
+.estado-ok   { color: var(--verde); text-shadow: 0 0 8px rgba(61, 255, 154, 0.6); }
+
+/* ============================================================
+   DESPEDIDA
+   ============================================================ */
+#seccion-salir {
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+    padding: 40px 0;
+}
+
+#seccion-salir.oculto {
+    display: none;
+}
+
+.despedida {
+    margin: 0;
+    font-family: var(--fuente-titulo);
+    font-size: 1.3rem;
+    line-height: 1.6;
+    text-align: center;
+    color: var(--cian);
+    text-shadow: 0 0 12px rgba(34, 228, 255, 0.7);
+}
+
+/* ============================================================
+   PANTALLAS PEQUEÑAS (celular)
+   ============================================================ */
+@media (max-width: 720px) {
+    .comprar {
+        grid-template-columns: 1fr;
+    }
+    .menu__btn {
+        font-size: 0.7rem;
+        padding: 10px 6px;
+    }
+    .maquina {
+        padding: 18px;
+    }
+}

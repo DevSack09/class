@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máquina Expendedora</title>
+    <!-- Tipografías de Google Fonts (si no hay internet, se usan las de respaldo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&family=VT323&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Conectamos la hoja de estilos (los colores y el diseño) -->
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <!-- ===================================================
+         HTML = la ESTRUCTURA de la página (qué elementos hay)
+         CSS  = el DISEÑO (cómo se ven)        -> estilos.css
+         JS   = la LÓGICA (qué hacen)          -> maquina.js
+         =================================================== -->
+
+    <!-- Luces de fondo decorativas -->
+    <div class="fondo-luz luz-1"></div>
+    <div class="fondo-luz luz-2"></div>
+
+    <main class="maquina">
+        <!-- Letrero de neón -->
+        <header class="maquina__titulo">
+            <h1>SNACK<span>·</span>BOX</h1>
+            <p>Máquina expendedora</p>
+        </header>
+
+        <!-- MENÚ PRINCIPAL: las mismas 3 opciones del programa en Python -->
+        <nav class="menu">
+            <button class="menu__btn activo" data-opcion="1"><b>1</b> Comprar</button>
+            <button class="menu__btn" data-opcion="2"><b>2</b> Inventario</button>
+            <button class="menu__btn salir" data-opcion="3"><b>3</b> Salir</button>
+        </nav>
+
+        <!-- ================= SECCIÓN 1: COMPRAR ================= -->
+        <section id="seccion-comprar" class="seccion">
+            <div class="comprar">
+
+                <!-- Vitrina de cristal con los productos -->
+                <div class="vitrina">
+                    <!-- Aquí JavaScript dibuja las tarjetas de los productos -->
+                    <div id="productos" class="productos"></div>
+                    <!-- Bandeja donde "cae" el producto comprado -->
+                    <div class="bandeja">
+                        <span class="bandeja__texto">EMPUJE</span>
+                        <span id="bandeja-producto" class="bandeja__producto"></span>
+                    </div>
+                </div>
+
+                <!-- Panel de control a la derecha -->
+                <div class="panel">
+                    <!-- Pantalla LCD donde aparecen los mensajes -->
+                    <div id="mensaje" class="mensaje">Selecciona un producto para comenzar.</div>
+
+                    <div class="formulario">
+                        <label>
+                            Cantidad
+                            <input type="number" id="cantidad" placeholder="0">
+                        </label>
+
+                        <div class="total">
+                            <span>Total a pagar</span>
+                            <strong id="importe">$0</strong>
+                        </div>
+
+                        <label>
+                            Introduce tu dinero
+                            <input type="number" id="dinero" placeholder="$0" step="0.5">
+                        </label>
+
+                        <!-- Ranura decorativa para monedas -->
+                        <div class="ranura"><span></span></div>
+
+                        <button id="btn-comprar" class="btn-comprar">Comprar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECCIÓN 2: INVENTARIO ================= -->
+        <section id="seccion-inventario" class="seccion oculto">
+            <h2>Inventario</h2>
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Existencias</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <!-- JavaScript llena estas filas con un ciclo for -->
+                <tbody id="tabla-inventario"></tbody>
+            </table>
+            <div class="total total--grande">
+                <span>Total de ventas realizadas</span>
+                <strong id="total-ventas">$0.00</strong>
+            </div>
+        </section>
+
+        <!-- ================= SECCIÓN 3: SALIR ================= -->
+        <section id="seccion-salir" class="seccion oculto">
+            <p class="despedida">👋 Gracias por usar la máquina expendedora.<br>¡Hasta luego!</p>
+            <button id="btn-reiniciar" class="btn-comprar">Volver a encender</button>
+        </section>
+    </main>
+
+    <!-- Conectamos la lógica al final, cuando el HTML ya existe -->
+    <script src="maquina.js"></script>
+</body>
+</html>
